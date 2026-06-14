@@ -33,8 +33,8 @@ Route::prefix('v1')->group(function () {
         // Products Management
         Route::get('/products',             [App\Http\Controllers\API\v1\Company\ProductController::class, 'index']);
         Route::post('/products',            [App\Http\Controllers\API\v1\Company\ProductController::class, 'store']);
-        Route::get('/products/{product}',   [App\Http\Controllers\API\v1\Company\ProductController::class, 'show']);
-        Route::delete('/products/{product}', [App\Http\Controllers\API\v1\Company\ProductController::class, 'destroy']);
+        Route::patch('/products/{product}',   [App\Http\Controllers\API\v1\Company\ProductController::class, 'update']);
+
 
         // Pharmacies List
         Route::get('/pharmacies', function() {

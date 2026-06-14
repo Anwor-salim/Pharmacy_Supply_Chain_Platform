@@ -8,9 +8,19 @@ use App\Actions\Company\StoreProductAction;
 use App\DTOs\Company\ProductDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\StoreProductRequest;
-use App\Models\Product;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Company\UpdateProductRequest;
+use App\Actions\Company\UpdateProductAction;
+
+    public function update(UpdateProductRequest $request, UpdateProductAction $action, Product $product): JsonResponse
+    {
+        $updatedProduct = $action->execute($request, $product);
+
+        return sendSuccessResponse(
+            message: 'تم تعديل المنتج بنجاح',
+            data: $updatedProduct
+        );
+    }
+
 
 final class ProductController extends Controller
 {
