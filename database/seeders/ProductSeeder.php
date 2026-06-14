@@ -21,6 +21,18 @@ class ProductSeeder extends Seeder
             ]
         );
 
+        // إنشاء مستخدم للشركة لتسجيل الدخول
+        \App\Models\User::firstOrCreate(
+            ['email' => 'mast@company.com'],
+            [
+                'name' => 'MAST',
+                'password' => bcrypt('13141516'),
+                'role' => 'company',
+                'userable_id' => $company->id,
+                'userable_type' => \App\Models\Company::class,
+            ]
+        );
+
         $products = [
             [
                 'name'            => 'بانادول إكسترا',
