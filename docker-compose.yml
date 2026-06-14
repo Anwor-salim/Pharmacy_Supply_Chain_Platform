@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-docker
+    container_name: laravel_app
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    volumes:
+      - .:/var/www
+    command: >
+      sh -c "composer install &&
+             npm install &&
+             php -r \"file_exists('.env') || copy('.env.example', '.env');\" &&
+             php artisan key:generate &&
+             php artisan migrate --force &&
+             npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan serve --host=0.0.0.0 --port=8000\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev -- --host 0.0.0.0\" --names=server,queue,vite --kill-others"
+    environment:
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/database/database.sqlite
+      - APP_ENV=local
