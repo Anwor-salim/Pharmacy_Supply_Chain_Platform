@@ -12,19 +12,17 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        // إنشاء شركة برقم 4 لتجنب مشكلة الربط (Foreign Key Constraint)
-        \App\Models\Company::firstOrCreate(
-            ['id' => 4],
+        // إنشاء شركة الجهيمي
+        $company = \App\Models\Company::firstOrCreate(
+            ['name' => 'شركة الجهيمي'],
             [
-                'name' => 'شركة الأدوية الرئيسية',
-                'email' => 'info@mainpharma.com',
-                'phone' => '01000000000'
+                'email' => 'info@aljuhaimi.com',
+                'phone' => '01000000000',
             ]
         );
 
         $products = [
             [
-                'company_id'      => 4,
                 'name'            => 'بانادول إكسترا',
                 'scientific_name' => 'Paracetamol / Caffeine',
                 'description'     => 'مسكن فعال للآلام وخافض للحرارة',
@@ -37,7 +35,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 500,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'أوجمنتين',
                 'scientific_name' => 'Amoxicillin / Clavulanic Acid',
                 'description'     => 'مضاد حيوي واسع المدى لعلاج الالتهابات البكتيرية',
@@ -50,7 +47,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 200,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'بروفين',
                 'scientific_name' => 'Ibuprofen',
                 'description'     => 'مسكن للآلام ومضاد للالتهاب وقوة مفعول طويلة',
@@ -63,7 +59,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 400,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'فنتولين',
                 'scientific_name' => 'Salbutamol',
                 'description'     => 'موسع للقصبات الهوائية وسريع المفعول',
@@ -76,7 +71,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 150,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'نيكسيوم',
                 'scientific_name' => 'Esomeprazole',
                 'description'     => 'لعلاج حموضة المعدة وقرحة الجهاز الهضمي',
@@ -89,7 +83,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 300,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'سينيكود',
                 'scientific_name' => 'Butamirate citrate',
                 'description'     => 'شراب مهدئ للسعال الجاف',
@@ -102,7 +95,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 250,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'زيرتك',
                 'scientific_name' => 'Cetirizine',
                 'description'     => 'مضاد للحساسية والتهابات الجيوب الأنفية',
@@ -115,7 +107,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 350,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'دالاسين سي',
                 'scientific_name' => 'Clindamycin',
                 'description'     => 'مضاد حيوي لعلاج الالتهابات البكتيرية الشديدة',
@@ -128,7 +119,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 180,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'ليبيتور',
                 'scientific_name' => 'Atorvastatin',
                 'description'     => 'لخفض نسبة الكوليسترول والدهون في الدم',
@@ -141,7 +131,6 @@ class ProductSeeder extends Seeder
                 'stock_quantity'  => 200,
             ],
             [
-                'company_id'      => 4,
                 'name'            => 'كلاريتين',
                 'scientific_name' => 'Loratadine',
                 'description'     => 'مضاد للهستامين لا يسبب النعاس',
@@ -156,7 +145,9 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            \App\Models\Product::create($product);
+            \App\Models\Product::create(array_merge($product, [
+                'company_id' => $company->id,
+            ]));
         }
     }
 }
