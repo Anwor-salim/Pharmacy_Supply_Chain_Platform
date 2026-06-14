@@ -11,6 +11,12 @@ use App\Http\Requests\Company\StoreProductRequest;
 use App\Http\Requests\Company\UpdateProductRequest;
 use App\Actions\Company\UpdateProductAction;
 
+use App\Models\Product;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+
+final class ProductController extends Controller
+{
     public function update(UpdateProductRequest $request, UpdateProductAction $action, Product $product): JsonResponse
     {
         $updatedProduct = $action->execute($request, $product);
@@ -20,10 +26,6 @@ use App\Actions\Company\UpdateProductAction;
             data: $updatedProduct
         );
     }
-
-
-final class ProductController extends Controller
-{
     public function index(): JsonResponse
     {
         /** @var \App\Models\User $user */
